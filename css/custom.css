@@ -2,3 +2,18 @@ h1, h2, h3, h4, h5, h6 {
     font-family: Bitter,sans-serif;
     font-weight: 700;
 }
+.topnavigatie {
+    max-height: 60px;
+    transition: top 0.3s;
+}
+body {
+    padding-top: 60px;
+  }
+  @media (max-width: 979px) {
+    body {
+      padding-top: 0px;
+    }
+  }
+.cbody {
+  padding-left: 1rem;
+}

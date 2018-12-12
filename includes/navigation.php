@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav id="topnavbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top topnavigatie">
       <div class="container">
-        <a class="navbar-brand" href="#">Rewinkel</a>
+        <a class="navbar-brand" href="#"><i class="fas fa-sync fa-2x"></i> Rewinkel</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,13 +12,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="#">MijnRewinkel</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
+              <a class="nav-link" href="#">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="registration.php">Registratie</a>
             </li>
           </ul>
         </div>
