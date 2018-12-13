@@ -6,9 +6,9 @@
   <h5 class="card-header">Artikelen Zoeken</h5>
   <div class="card-body">
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
+      <input type="text" class="form-control" placeholder="">
       <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Go!</button>
+        <button class="btn btn-warning" type="button">Zoek</button>
       </span>
     </div>
   </div>
@@ -55,6 +55,15 @@
 <div class="card my-4">
   <h5 class="card-header">Populaire Artikelen</h5>
   <div class="card-body">
-    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+    <ul class="list-unstyled">
+    <li><a href="#">advertentie 1</a></li>
+    <li><a href="#">advertentie 2</a></li>
+    <li><a href="#">advertentie 3</a></li>
+    <li><a href="#">advertentie 4</a></li>
+    <li><a href="#">advertentie 5</a></li>
+    <li><a href="#">advertentie 6</a></li>
+    <li><a href="#">advertentie 7</a></li>
+      
+    </ul>
   </div>
 </div>
