@@ -1,11 +1,14 @@
-/* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
+/* topnavigatie verbergen bij scrollen */
+var scrollTreshhold = 500;
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
   var currentScrollPos = window.pageYOffset;
   if (prevScrollpos > currentScrollPos) {
     document.getElementById("topnavbar").style.top = "0";
   } else {
-    document.getElementById("topnavbar").style.top = "-60px";
+    if (window.pageYOffset > scrollTreshhold) {
+      document.getElementById("topnavbar").style.top = "-60px";
+    }
   }
   prevScrollpos = currentScrollPos;
 } 

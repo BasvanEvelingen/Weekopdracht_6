@@ -2,18 +2,18 @@
 /**
  * USER CLASS LOGIN|LOGOUT|REGISTER
  * @author Bas van Evelingen <BasvanEvelingen@me.com>
- * @version 0.5
+ * @version 0.7
  * @todo testing
  */
 namespace rewinkel\user {
 
+    use PDO;
     class User
     {
         private $pdo;   // dbase connectie referentie
         private $user;  // gebruiker object
         private $msg;   // foutberichten
-        private $permitedAttemps = 5;   // aantal keren proberen in te loggen
-
+        
         /**
          * Connection initialisatie functie
          * @param string $connectionString DB connection string.
@@ -25,7 +25,8 @@ namespace rewinkel\user {
         {
             if (session_status() === PHP_SESSION_ACTIVE) {
                 try {
-                    $pdo = new PDO($connectionString, $user, $password);
+                    $pdo = new \PDO($connectionString, $user, $password);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $this->pdo = $pdo;
                     return true;
                 } catch (PDOException $e) {
@@ -60,7 +61,7 @@ namespace rewinkel\user {
                 return false;
             } else {
                 $pdo = $this->pdo;
-                $stmt = $pdo->prepare('SELECT id, name, surname, email, password, role FROM users WHERE email = ?');
+                $stmt = $pdo->prepare('SELECT id, name, surname, username, email, password, role FROM users WHERE email = ?');
                 $stmt->execute([$email]);
                 $user = $stmt->fetch();
 
@@ -70,6 +71,7 @@ namespace rewinkel\user {
                     $_SESSION['user']['id'] = $user['id'];
                     $_SESSION['user']['name'] = $user['name'];
                     $_SESSION['user']['surname'] = $user['surname'];
+                    $_SESSION['user']['username'] = $user['username'];
                     $_SESSION['user']['email'] = $user['email'];
                     $_SESSION['user']['role'] = $user['role'];
                     return true;
@@ -85,24 +87,26 @@ namespace rewinkel\user {
          * @param string $email User email.
          * @param string $name User voornaam
          * @param string $surname User achternaam
+         * @param string $usermame User gebruikersnaam
          * @param string $password User wachtwoord
          * @return bool 
          */
-        public function registration($email, $name, $surname, $password)
+        public function registration($email, $name, $surname, $username, $password)
         {
             $pdo = $this->pdo;
+
             if ($this->checkEmail($email)) {
                 $this->msg = 'Deze email is al in gebruik, kies een andere.';
                 return false;
             }
-            if (!(isset($email) && isset($name) && isset($surname) && isset($pass) && filter_var($email, FILTER_VALIDATE_EMAIL))) {
+            if (!isset($email) && !isset($name) && !isset($surname) && !isset($username) && !isset($password)) {
                 $this->msg = 'Vul alle verplichte velden in.';
                 return false;
             }
 
             $password = $this->hashPass($password);
-            $stmt = $pdo->prepare('INSERT INTO user (name, surname, email, password) VALUES (?, ?, ?, ?)');
-            if ($stmt->execute([$name, $surname, $email, $password])) {
+            $stmt = $pdo->prepare('INSERT INTO user (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)');
+            if ($stmt->execute([$name, $surname, $username, $email, $password])) {
                return true;
             } else {
                 $this->msg = 'Registreren mislukt.';
@@ -161,14 +165,17 @@ namespace rewinkel\user {
          * @param int $id User id.
          * @param string $name User voornaam.
          * @param string $surname User achternaam.
+         * @param string $address adres
+         * @param string $zipcode (6 lengte 4cijfers2letters)
+         * @param string $city woonplaats
+         * @param string $telephone
          * @return boolean of success.
          */
-        public function userUpdate($id, $name, $surname)
-        {
+        public function userUpdate($id, $name, $surname, $username, $address, $zipcode, $city, $telephone) {
             $pdo = $this->pdo;
-            if (isset($id) && isset($name) && isset($surname)) {
-                $stmt = $pdo->prepare('UPDATE user SET name = ?, surname = ? WHERE id = ?');
-                if ($stmt->execute([$id, $name, $surname])) {
+            if (isset($id) && isset($name) && isset($surname) && isset($address) && isset($zipcode) && isset($city) && isset($telephone)) {
+                $stmt = $pdo->prepare('UPDATE user SET name = ?, surname = ?, username = ?, address = ?, zipcode = ?, city = ?, telephone = ? WHERE id = ?');
+                if ($stmt->execute([$id, $name, $surname, $username, $address, $zipcode, $city, $telephone])) {
                     return true;
                 } else {
                     $this->msg = 'Gebruikersinformatie veranderen mislukt.';

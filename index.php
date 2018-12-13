@@ -1,5 +1,7 @@
  <!-- header -->
  <?php
+ require_once "lib/user.php";
+ require_once "config/dbconfig.php";
  include "includes/header.php";
  ?>
  
@@ -11,12 +13,10 @@
 
     <!-- Page Content -->
     <div class="container">
-
       <div class="row">
-
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-
+          <img class="card-img-top" src="images/MarketPlace.jpg" alt="Card image cap">
           <!-- Blog Post -->
           <div class="card mb-4">
             <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
@@ -77,11 +77,13 @@ include "includes/sidebar.php";
 ?>
 
   
-        </div>
+
 
       </div>
       <!-- /.row -->
 
     </div>
     <!-- /.container -->
-
+<?php 
+include "includes/footer.php";
+?>
