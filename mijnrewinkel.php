@@ -12,7 +12,7 @@
   include "includes/navigation.php";
   if (isset($_SESSION['user']['role']) && isset($_SESSION['user']['username'])) {
       if ($_SESSION['user']['role']=='user') {
-          $userName = $_SESSION['username'];
+          $userName = $_SESSION['user']['username'];
       }
       elseif ($_SESSION['user']['role']=='admin') {
           header("location: admin/pages/index.php");
@@ -26,7 +26,7 @@
   
 
 $msg = "u kunt nu artikelen aanbieden";
-$userName = "";
+
 
 ?>
     <div class="container">
@@ -34,7 +34,7 @@ $userName = "";
         <div class="col-md-8">
         <!-- begin card -->
           <div class="card mb-4">
-            <h2 class="card-header">Hallo<?php echo $userName ?>, Rewinkel Profiel Pagina</h2>
+            <h2 class="card-header">Hallo <?php echo $userName ?>, uw Rewinkel Profiel Pagina</h2>
             <div class="card-body cbody"> 
                 <p class="card-text">Uw menu opties</p>  
                 <p class="card-text text-success"><?php echo $msg ?></p>

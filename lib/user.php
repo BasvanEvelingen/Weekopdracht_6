@@ -66,9 +66,7 @@ namespace rewinkel\user {
                 $stmt = $pdo->prepare('SELECT id, name, surname, username, email, password, role FROM user WHERE email = ?');
                 $stmt->execute([$email]);
                 $user = $stmt->fetch();
-
-                // TODO: waarom onderstaande verify niet lukt is mij een raadsel
-                //if (password_verify($password, $user['password'])) {
+                if (password_verify($password, $user['password'])) {
                     $this->user = $user;
                     session_regenerate_id();
                     $_SESSION['user']['id'] = $user['id'];
@@ -79,10 +77,10 @@ namespace rewinkel\user {
                     $_SESSION['user']['role'] = $user['role'];
                     
                     return true;
-                //} else {
-                //    $this->msg = 'Fout wachtwoord en/of gebruikersnaam combinatie';
-                //    return false;
-                //}
+                } else {
+                   $this->msg = 'Fout wachtwoord en/of gebruikersnaam combinatie';
+                    return false;
+                }
             }
         }
 
