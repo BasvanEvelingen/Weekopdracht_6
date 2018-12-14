@@ -9,25 +9,56 @@
   <?php 
   include "includes/navigation.php";
 
+$email = "";
+$password = "";
 $email_error = "";
 $password_error = "";
 $msg = "";
 
  if (isset($_POST['submit'])) {
 
-    if (empty($_POST['email'])) { $email_error = "vul uw email alstublieft in.";}
-      // Wachtwoord controleren
-      if (empty(trim($_POST["password"]))) {
+    // email niet leeg?
+    if (empty($_POST['email'])) { 
+        $email_error = "vul uw email alstublieft in.";
+    } else {
+        $email = $_POST['email'];
+    }
+    // wachtwoord niet leeg?
+    if (empty(trim($_POST['password']))) {
         $password_error = "Vul uw wachtwoord in.";     
-      }
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = filter_input(INPUT_POST, $password, FILTER_DEFAULT);
+    } else {
+        $password = $_POST['password'];
+    }
+
+    //wanneer allebei niet leeg filter toepassen
+    if (empty($email_error) && empty($password_error)) {
+        $email = filter_input(INPUT_POST, $email, FILTER_SANITIZE_EMAIL);
+        $password = filter_input(INPUT_POST, $password, FILTER_DEFAULT);
+
+        echo "na filter: ". $email;
+        exit();
+        /*
+        if (!$email) {
+            $email_error="email niet goed ingevuld.";
+        }
+        if (!$password) {
+            $password_error="wachtwoord niet correct ingevuld";
+          
+        }
+        */
+    }
 
     if($user->login($email,$password)) {
+        var_dump("gelukt!!!!!!");
+        exit();
         $msg = "Inloggen gelukt";
         $_SESSION['message']= "U kunt nu naar MijnRewinkel.";
         header("location: index.php");     
     }
+
+
+
+
 
  }
 

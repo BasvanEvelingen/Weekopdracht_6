@@ -1,5 +1,5 @@
     <!-- Footer -->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-light">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Sebastiaan van Evelingen 2018</p>
       </div>

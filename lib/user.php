@@ -61,7 +61,7 @@ namespace rewinkel\user {
                 return false;
             } else {
                 $pdo = $this->pdo;
-                $stmt = $pdo->prepare('SELECT id, name, surname, username, email, password, role FROM users WHERE email = ?');
+                $stmt = $pdo->prepare('SELECT id, name, surname, username, email, password, role FROM user WHERE email = ?');
                 $stmt->execute([$email]);
                 $user = $stmt->fetch();
 
@@ -107,6 +107,7 @@ namespace rewinkel\user {
             $password = $this->hashPass($password);
             $stmt = $pdo->prepare('INSERT INTO user (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)');
             if ($stmt->execute([$name, $surname, $username, $email, $password])) {
+               $this->assignRole($pdo->lastInsertId(),"user");
                return true;
             } else {
                 $this->msg = 'Registreren mislukt.';

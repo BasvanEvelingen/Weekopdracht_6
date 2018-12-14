@@ -12,7 +12,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">MijnRewinkel</a>
+              <a class="nav-link" href="mijnrewinkel.php">MijnRewinkel</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login</a>
