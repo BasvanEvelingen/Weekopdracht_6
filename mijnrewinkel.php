@@ -7,12 +7,14 @@
  ?>
  <!-- Navigation -->
   <?php 
+
+
   include "includes/navigation.php";
-  if (isset($_SESSION['role']) && isset($_SESSION['username'])) {
-      if ($_SESSION['role']=='user') {
+  if (isset($_SESSION['user']['role']) && isset($_SESSION['user']['username'])) {
+      if ($_SESSION['user']['role']=='user') {
           $userName = $_SESSION['username'];
       }
-      elseif ($_SESSION['role']=='admin') {
+      elseif ($_SESSION['user']['role']=='admin') {
           header("location: admin/pages/index.php");
       }
   }

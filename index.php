@@ -8,6 +8,13 @@
  <!-- Navigation -->
   <?php 
   include "includes/navigation.php";
+  
+  if (isset($_SESSION['user']['username'])) {
+
+
+  }
+
+
   ?>
 
 

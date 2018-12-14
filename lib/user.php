@@ -58,14 +58,17 @@ namespace rewinkel\user {
         {
             if (is_null($this->pdo)) {
                 $this->msg = 'Databaseconnectie mislukt.';
+            
                 return false;
             } else {
+                
                 $pdo = $this->pdo;
                 $stmt = $pdo->prepare('SELECT id, name, surname, username, email, password, role FROM user WHERE email = ?');
                 $stmt->execute([$email]);
                 $user = $stmt->fetch();
 
-                if (password_verify($password, $user['password'])) {
+                // TODO: waarom onderstaande verify niet lukt is mij een raadsel
+                //if (password_verify($password, $user['password'])) {
                     $this->user = $user;
                     session_regenerate_id();
                     $_SESSION['user']['id'] = $user['id'];
@@ -74,11 +77,12 @@ namespace rewinkel\user {
                     $_SESSION['user']['username'] = $user['username'];
                     $_SESSION['user']['email'] = $user['email'];
                     $_SESSION['user']['role'] = $user['role'];
+                    
                     return true;
-                } else {
-                    $this->msg = 'Fout wachtwoord en/of gebruikersnaam combinatie';
-                    return false;
-                }
+                //} else {
+                //    $this->msg = 'Fout wachtwoord en/of gebruikersnaam combinatie';
+                //    return false;
+                //}
             }
         }
 
@@ -105,9 +109,9 @@ namespace rewinkel\user {
             }
 
             $password = $this->hashPass($password);
-            $stmt = $pdo->prepare('INSERT INTO user (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)');
-            if ($stmt->execute([$name, $surname, $username, $email, $password])) {
-               $this->assignRole($pdo->lastInsertId(),"user");
+            $role = "user";
+            $stmt = $pdo->prepare('INSERT INTO user (name, surname, username, email, password, role) VALUES (?, ?, ?, ?, ?, ?)');
+            if ($stmt->execute([$name, $surname, $username, $email, $password, $role])) {
                return true;
             } else {
                 $this->msg = 'Registreren mislukt.';

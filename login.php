@@ -16,8 +16,8 @@ $password_error = "";
 $msg = "";
 
  if (isset($_POST['submit'])) {
-
     // email niet leeg?
+    
     if (empty($_POST['email'])) { 
         $email_error = "vul uw email alstublieft in.";
     } else {
@@ -30,36 +30,30 @@ $msg = "";
         $password = $_POST['password'];
     }
 
+    echo "<h1>HIER</h1>";
+ 
     //wanneer allebei niet leeg filter toepassen
     if (empty($email_error) && empty($password_error)) {
-        $email = filter_input(INPUT_POST, $email, FILTER_SANITIZE_EMAIL);
-        $password = filter_input(INPUT_POST, $password, FILTER_DEFAULT);
 
-        echo "na filter: ". $email;
-        exit();
-        /*
-        if (!$email) {
-            $email_error="email niet goed ingevuld.";
+        // TO DO filters testen, werken niet zoals ik dacht
+        //$femail = filter_input(INPUT_POST, $email, FILTER_SANITIZE_EMAIL);
+        //$fpassword = filter_input(INPUT_POST, $password, FILTER_DEFAULT);
+
+        //if (!$femail) {
+        //    $email_error="email niet goed ingevuld.";
+        //}
+        //if (!$fpassword) {
+        //    $password_error="wachtwoord niet correct ingevuld";    
+        //}
+        
+    //}
+        if ($user->login($email,$password)) {
+            echo "hier?";
+            $msg = "Inloggen gelukt";
+            $_SESSION['message']= "U kunt nu naar MijnRewinkel.";
+            header("location: mijnrewinkel.php");     
         }
-        if (!$password) {
-            $password_error="wachtwoord niet correct ingevuld";
-          
-        }
-        */
     }
-
-    if($user->login($email,$password)) {
-        var_dump("gelukt!!!!!!");
-        exit();
-        $msg = "Inloggen gelukt";
-        $_SESSION['message']= "U kunt nu naar MijnRewinkel.";
-        header("location: index.php");     
-    }
-
-
-
-
-
  }
 
   ?>

@@ -43,19 +43,26 @@ $msg = "";
         }
     }
     
-    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-    $surname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING);
-    $username = filter_input(INPUT_POST,'username',FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = filter_input(INPUT_POST, $password, FILTER_DEFAULT);
+    // TODO: filters werken niet zoals ik had gedacht, uitzoeken
+    //$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    //$surname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING);
+    //$username = filter_input(INPUT_POST,'username',FILTER_SANITIZE_STRING);
+    //$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    //$password = filter_input(INPUT_POST, $password, FILTER_DEFAULT);
 
-    
-    if($user->registration($name, $surname, $username, $email, $password)) {
-        echo "<h1>HIER?</h1>";
-        $msg = "Registratie gelukt";
-        $_SESSION['message']= "U kunt nu inloggen.";
-        header("location: login.php");
-    }
+    if (empty($name_error) && empty($surname_error) && empty($username_error) && empty($email_error) && empty($password_error)) {
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        if ($user->registration($email, $name, $surname, $username, $password)) {
+            $msg = "Registratie gelukt";
+            $_SESSION['message']= "U kunt nu inloggen.";
+            header("location: login.php");
+        }
+    }   
 
  }
 
